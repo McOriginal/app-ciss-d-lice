@@ -1,3 +1,4 @@
+import 'package:cisse_delice/users/home.dart';
 import 'package:cisse_delice/users/signup.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,34 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Image.asset('assets/images/loginbg.png'),
+          Stack(
+            children: [
+              // Image.asset('assets/images/loginbg.png'),
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const HomePage(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Skip",
+                      style: GoogleFonts.karla(
+                        color: Colors.orange,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
           Center(
             child: Column(
               children: [
@@ -143,7 +171,13 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   margin: const EdgeInsets.all(10),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const HomePage(),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       elevation: 2,
                       backgroundColor: Colors.orange,
