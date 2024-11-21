@@ -1,3 +1,5 @@
+import 'package:cisse_delice/home.dart';
+import 'package:cisse_delice/ui/ui_modal.dart';
 import 'package:cisse_delice/users/login.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -11,244 +13,135 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  bool isChecked = false;
+
   @override
   Widget build(BuildContext context) {
-    // #############################""
-    bool isChecked = false;
-// #############################""
-
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Image.asset('assets/images/loginbg.png'),
-          Center(
-            child: Column(
-              children: [
-                Text(
-                  'Connecter vous à votre compte',
-                  style: GoogleFonts.karla(
-                    color: Colors.black,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                  ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Header
+            Container(
+              height: MediaQuery.of(context).size.height / 5,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/top2.png"),
+                  fit: BoxFit.cover,
                 ),
-                const SizedBox(height: 10),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.black54,
+              ),
+            ),
+
+            // Form
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Créer un nouveau compte',
+                    style: GoogleFonts.karla(
+                      color: AppColors.accentColor,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
                     ),
-                    borderRadius: BorderRadius.circular(5),
                   ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Container(
-                        height: 10,
-                        width: 10,
-                        child: const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Icon(
-                            Icons.person_outline,
-                            color: Colors.black54,
-                            size: 25,
-                          ),
+                  const SizedBox(height: 10),
+
+                  // Full Name Field
+                  _buildTextField(
+                    hintText: "Nom complet",
+                    icon: Icons.person_outlined,
+                  ),
+
+                  // Phone Number Field
+                  _buildTextField(
+                    hintText: "Téléphone",
+                    icon: Icons.phone_outlined,
+                  ),
+
+                  // Email Address Field
+                  _buildTextField(
+                    hintText: "Adresse email",
+                    icon: Icons.email_outlined,
+                  ),
+
+                  // Password Field
+                  _buildTextField(
+                    hintText: "Mot de passe",
+                    icon: Icons.lock_outline,
+                    isPassword: true,
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  // Remember Me Checkbox
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: isChecked,
+                        onChanged: (value) {
+                          setState(() {
+                            isChecked = value!;
+                          });
+                        },
+                        activeColor: Colors.orange,
+                      ),
+                      Text(
+                        "Se souvenir de moi",
+                        style: GoogleFonts.karla(
+                          color: AppColors.accentColor,
+                          fontSize: 16,
                         ),
                       ),
-                      disabledBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      hintText: "Nom complet",
-                      hintStyle: const TextStyle(
-                        color: Colors.black26,
-                      ),
-                    ),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.black54,
-                    ),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Container(
-                        height: 10,
-                        width: 10,
-                        child: const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Icon(
-                            Icons.email_outlined,
-                            color: Colors.black54,
-                            size: 25,
-                          ),
+
+                  // Signup Button
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const HomePage(),
                         ),
-                      ),
-                      disabledBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      hintText: "Adresse email",
-                      hintStyle: const TextStyle(
-                        color: Colors.black26,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.black54,
-                    ),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Container(
-                        height: 10,
-                        width: 10,
-                        child: const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Icon(
-                            Icons.phone_outlined,
-                            color: Colors.black54,
-                            size: 25,
-                          ),
-                        ),
-                      ),
-                      disabledBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      hintText: "Numéro de téléhone",
-                      hintStyle: const TextStyle(
-                        color: Colors.black26,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.black54,
-                    ),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Container(
-                        height: 10,
-                        width: 10,
-                        child: const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Icon(
-                            Icons.lock_outline,
-                            color: Colors.black54,
-                            size: 25,
-                          ),
-                        ),
-                      ),
-                      disabledBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      hintText: "Mot de passe",
-                      hintStyle: const TextStyle(
-                        color: Colors.black26,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: isChecked,
-                      checkColor: Colors.white,
-                      activeColor: Colors.orange,
-                      side: const BorderSide(
-                        width: 1,
-                        color: Colors.orange,
-                      ),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5),
-                        ),
-                      ),
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      "Se souvenir de moi",
-                      style: GoogleFonts.karla(
-                        color: Colors.orange,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    )
-                  ],
-                ),
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  margin: const EdgeInsets.all(10),
-                  child: ElevatedButton(
-                    onPressed: () {},
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
-                      elevation: 2,
                       backgroundColor: Colors.orange,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      minimumSize: const Size.fromHeight(50),
                     ),
                     child: Text(
                       "S'inscrire",
                       style: GoogleFonts.karla(
-                        color: Colors.black,
-                        fontSize: 20,
+                        fontSize: 25,
                         fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                RichText(
-                  text: TextSpan(
-                    text: "Vous avez déjà un compte ?:  ",
-                    style: GoogleFonts.karla(
-                      fontSize: 15,
-                      color: Colors.black,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: "se conneter compte",
+
+                  const SizedBox(height: 10),
+
+                  // Redirect to Login
+                  RichText(
+                    text: TextSpan(
+                      text: "Vous avez un compte ? ",
+                      style: GoogleFonts.karla(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: "Se connecter",
                           style: GoogleFonts.karla(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500),
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.of(context).push(
@@ -256,14 +149,51 @@ class _SignupPageState extends State<SignupPage> {
                                   builder: (context) => const LoginPage(),
                                 ),
                               );
-                            }),
-                    ],
+                            },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 100),
+            // Footer
+            Container(
+              height: MediaQuery.of(context).size.height / 2,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/bottom.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required String hintText,
+    required IconData icon,
+    bool isPassword = false,
+  }) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black54, width: 1),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: TextField(
+        obscureText: isPassword,
+        decoration: InputDecoration(
+          prefixIcon: Icon(icon, color: Colors.black54),
+          border: InputBorder.none,
+          hintText: hintText,
+          hintStyle: const TextStyle(color: Colors.black26),
+        ),
       ),
     );
   }
