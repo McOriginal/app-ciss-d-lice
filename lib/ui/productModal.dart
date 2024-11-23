@@ -13,7 +13,7 @@ class Category {
 class Product {
   final String id;
   final String name;
-  final double price;
+  final int price;
   final String imageUrl;
   bool isFavorite;
   final String categoryId;
@@ -59,40 +59,11 @@ final categories = [
 
 // Création des produits
 final products = [
-  Product(
-    id: uuid.v4(),
-    name: "Pomme",
-    price: 1.5,
-    imageUrl: "assets/images/pomme2.png",
-    isFavorite: false,
-    categoryId: categories[0].name,
-    description:
-        "Une pomme juteuse et croquante.\nParfaite pour les collations.\nRiche en vitamines.\nIdéale pour les tartes.",
-  ),
-  Product(
-    id: uuid.v4(),
-    name: "Banane",
-    price: 1.0,
-    imageUrl: "assets/images/bannane1.png",
-    isFavorite: false,
-    categoryId: categories[0].name,
-    description:
-        "Une banane douce et sucrée.\nIdéale pour les smoothies.\nRiche en potassium.\nBonne pour la digestion.",
-  ),
-  Product(
-    id: uuid.v4(),
-    name: "Carotte",
-    price: 0.8,
-    imageUrl: "assets/images/carote.png",
-    isFavorite: false,
-    categoryId: categories[1].name,
-    description:
-        "Une carotte riche en vitamine A.\nIdéale pour les smoothies.\nRiche en potassium.\nBonne pour la vue.",
-  ),
+
   Product(
     id: uuid.v4(),
     name: "Tomate",
-    price: 1.2,
+    price: 600,
     imageUrl: "assets/images/tomate1.png",
     isFavorite: false,
     categoryId: categories[1].name,
@@ -102,7 +73,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Jus d'orange",
-    price: 2.5,
+    price: 800,
     imageUrl: "assets/images/jus_orange.png",
     isFavorite: false,
     categoryId: categories[2].name,
@@ -112,7 +83,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Jus de mangue",
-    price: 3.0,
+    price: 900,
     imageUrl: "assets/images/jus_mangue.png",
     isFavorite: false,
     categoryId: categories[2].name,
@@ -122,7 +93,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Pomme",
-    price: 1.5,
+    price: 500,
     imageUrl: "assets/images/pomme.png",
     isFavorite: false,
     categoryId: categories[3].name,
@@ -131,9 +102,39 @@ final products = [
   ),
   Product(
     id: uuid.v4(),
+    name: "Pomme",
+    price: 500,
+    imageUrl: "assets/images/pomme2.png",
+    isFavorite: false,
+    categoryId: categories[0].name,
+    description:
+    "Une pomme juteuse et croquante.\nParfaite pour les collations.\nRiche en vitamines.\nIdéale pour les tartes.",
+  ),
+  Product(
+    id: uuid.v4(),
+    name: "Banane",
+    price: 400,
+    imageUrl: "assets/images/bannane1.png",
+    isFavorite: false,
+    categoryId: categories[0].name,
+    description:
+    "Une banane douce et sucrée.\nIdéale pour les smoothies.\nRiche en potassium.\nBonne pour la digestion.",
+  ),
+  Product(
+    id: uuid.v4(),
+    name: "Carotte",
+    price: 350,
+    imageUrl: "assets/images/carote.png",
+    isFavorite: false,
+    categoryId: categories[1].name,
+    description:
+    "Une carotte riche en vitamine A.\nIdéale pour les smoothies.\nRiche en potassium.\nBonne pour la vue.",
+  ),
+  Product(
+    id: uuid.v4(),
     name: "Annanas",
-    price: 2.0,
-    imageUrl: "assets/images/anana1.png",
+    price: 700,
+    imageUrl: "assets/images/anana.png",
     isFavorite: false,
     categoryId: categories[3].name,
     description:
@@ -142,7 +143,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Raisin",
-    price: 2.5,
+    price: 600,
     imageUrl: "assets/images/rezin1.png",
     isFavorite: false,
     categoryId: categories[0].name,
@@ -152,7 +153,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Pastèque",
-    price: 1.8,
+    price: 750,
     imageUrl: "assets/images/pasteque1.png",
     isFavorite: false,
     categoryId: categories[1].name,
@@ -162,7 +163,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Gingembre",
-    price: 1.2,
+    price: 400,
     imageUrl: "assets/images/gimgembre.png",
     isFavorite: false,
     categoryId: categories[1].name,
@@ -172,7 +173,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Jus de fraise",
-    price: 3.2,
+    price: 950,
     imageUrl: "assets/images/jus_fraise.png",
     isFavorite: false,
     categoryId: categories[2].name,
@@ -182,7 +183,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Raisin",
-    price: 2.3,
+    price: 800,
     imageUrl: "assets/images/rezin2.png",
     isFavorite: false,
     categoryId: categories[3].name,
@@ -192,7 +193,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Mangue",
-    price: 1.7,
+    price: 600,
     imageUrl: "assets/images/mangue.png",
     isFavorite: false,
     categoryId: categories[0].name,
@@ -202,7 +203,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Orange",
-    price: 0.5,
+    price: 350,
     imageUrl: "assets/images/lemon1.png",
     isFavorite: false,
     categoryId: categories[0].name,
@@ -212,7 +213,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Papaye",
-    price: 1.3,
+    price: 400,
     imageUrl: "assets/images/papaye.png",
     isFavorite: false,
     categoryId: categories[1].name,
@@ -222,7 +223,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Jus de carotte",
-    price: 2.8,
+    price: 800,
     imageUrl: "assets/images/jus_carotte.png",
     isFavorite: false,
     categoryId: categories[2].name,
@@ -232,7 +233,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Noix de coco",
-    price: 2.0,
+    price: 900,
     imageUrl: "assets/images/coco.png",
     isFavorite: false,
     categoryId: categories[3].name,
@@ -242,7 +243,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Concombre",
-    price: 1.8,
+    price: 600,
     imageUrl: "assets/images/comcombre.png",
     isFavorite: false,
     categoryId: categories[1].name,
@@ -252,7 +253,7 @@ final products = [
   Product(
     id: uuid.v4(),
     name: "Mangue",
-    price: 1.0,
+    price: 500,
     imageUrl: "assets/images/mangue2.png",
     isFavorite: false,
     categoryId: categories[1].name,

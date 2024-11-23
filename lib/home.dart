@@ -1,4 +1,6 @@
+import 'package:cisse_delice/cart/cart_list.dart';
 import 'package:cisse_delice/product/productDetail.dart';
+import 'package:cisse_delice/product/product_home.dart';
 import 'package:cisse_delice/ui/productModal.dart';
 import 'package:cisse_delice/ui/ui_modal.dart';
 import 'package:flutter/material.dart';
@@ -165,21 +167,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       Container(
                         padding: const EdgeInsets.all(10),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Mueilleur vente',
+                              'Les plus populaire',
                               style: GoogleFonts.karla(
-                                fontSize: 22,
+                                fontSize: 25,
                                 fontWeight: FontWeight.w900,
                                 color: AppColors.primaryColor,
                               ),
                             ),
                             const SizedBox(height: 10),
                             SizedBox(
-                              height: 200,
+                              height: MediaQuery.of(context).size.height * 0.2,
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: products.length,
+                                  itemCount: 4,
                                   itemBuilder: (context, index) {
                                     final product = products[index];
                                     return InkWell(
@@ -194,8 +197,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                       },
                                       child: Container(
                                         width:
-                                            MediaQuery.of(context).size.width /
-                                                1.3,
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
                                         margin: const EdgeInsets.all(10),
                                         child: Stack(
                                           children: [
@@ -274,15 +277,215 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                       ),
                                     );
                                   }),
-                            )
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              'En promotion',
+                              style: GoogleFonts.karla(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w900,
+                                color: AppColors.primaryColor,
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: products
+                                      .where((e) => e.price <= 500)
+                                      .length,
+                                  itemBuilder: (context, index) {
+                                    final product = products
+                                        .where((e) => e.price <= 500)
+                                        .toList()[index];
+
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProductDetail(product: product),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.3,
+                                        margin: const EdgeInsets.all(10),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: AppColors.whiteColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                color: AppColors.primaryColor,
+                                              ),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  blurRadius: 3,
+                                                  spreadRadius: 1,
+                                                  color: Colors.grey,
+                                                  offset: Offset(1, 2),
+                                                ),
+                                              ]),
+                                          child: Stack(
+                                            children: [
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: Image(
+                                                  image: AssetImage(
+                                                    product.imageUrl,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text(
+                                                    product.name,
+                                                    style: GoogleFonts.karla(
+                                                      fontSize: 25,
+                                                      color: AppColors
+                                                          .secondaryColor,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.bottomLeft,
+                                                  child: Text(
+                                                    '${product.price} F',
+                                                    style: GoogleFonts.karla(
+                                                      fontSize: 25,
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.bottomRight,
+                                                  child: Text(
+                                                    '${product.price * 2} F',
+                                                    style: GoogleFonts.karla(
+                                                      fontSize: 25,
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                bottom: 25,
+                                                right: 15,
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.bottomRight,
+                                                  child: Container(
+                                                    height: 3,
+                                                    width: 60,
+                                                    color:
+                                                        AppColors.accentColor,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        product.isFavorite =
+                                                            !product.isFavorite;
+                                                      });
+                                                    },
+                                                    child: Icon(
+                                                      product.isFavorite
+                                                          ? Icons.favorite
+                                                          : Icons
+                                                              .favorite_outline,
+                                                      size: 35,
+                                                      color: AppColors
+                                                          .secondaryColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ),
                           ],
                         ),
-                      )
+                      ),
+                      const SizedBox(height: 10),
+                      Center(
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width / 2,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ProductHome(),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              elevation: 4,
+                              shadowColor: Colors.grey,
+                              padding: const EdgeInsets.all(10),
+                              backgroundColor: AppColors.primaryColor,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Explorer plus",
+                                  style: GoogleFonts.karla(
+                                    color: AppColors.whiteColor,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.navigate_next,
+                                  size: 25,
+                                  color: AppColors.whiteColor,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                )
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -301,20 +504,40 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             unselectedLabelColor: Colors.black,
             indicator: const UnderlineTabIndicator(borderSide: BorderSide.none),
             onTap: (value) {},
-            tabs: const [
-              Icon(
-                Icons.home_outlined,
-                size: 30,
+            tabs: [
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    ),
+                  );
+                },
+                child: const Icon(
+                  Icons.home_outlined,
+                  size: 30,
+                ),
               ),
-              Icon(
+              const Icon(
                 Icons.favorite_outline,
                 size: 30,
               ),
-              Icon(
-                Icons.shopping_basket_outlined,
-                size: 30,
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CartList(),
+                    ),
+                  );
+                },
+                child: const Icon(
+                  Icons.shopping_basket_outlined,
+                  size: 30,
+                ),
               ),
-              Icon(
+              const Icon(
                 Icons.person_outline,
                 size: 30,
               ),
