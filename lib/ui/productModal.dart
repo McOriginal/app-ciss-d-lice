@@ -6,7 +6,11 @@ class Category {
   final String name;
   final String imageUrl;
 
-  Category({required this.id, required this.name, required this.imageUrl});
+  Category({
+    required this.id,
+    required this.name,
+    required this.imageUrl,
+  });
 }
 
 // Modèle pour les produits
@@ -59,7 +63,6 @@ final categories = [
 
 // Création des produits
 final products = [
-
   Product(
     id: uuid.v4(),
     name: "Tomate",
@@ -108,7 +111,7 @@ final products = [
     isFavorite: false,
     categoryId: categories[0].name,
     description:
-    "Une pomme juteuse et croquante.\nParfaite pour les collations.\nRiche en vitamines.\nIdéale pour les tartes.",
+        "Une pomme juteuse et croquante.\nParfaite pour les collations.\nRiche en vitamines.\nIdéale pour les tartes.",
   ),
   Product(
     id: uuid.v4(),
@@ -118,7 +121,7 @@ final products = [
     isFavorite: false,
     categoryId: categories[0].name,
     description:
-    "Une banane douce et sucrée.\nIdéale pour les smoothies.\nRiche en potassium.\nBonne pour la digestion.",
+        "Une banane douce et sucrée.\nIdéale pour les smoothies.\nRiche en potassium.\nBonne pour la digestion.",
   ),
   Product(
     id: uuid.v4(),
@@ -128,7 +131,7 @@ final products = [
     isFavorite: false,
     categoryId: categories[1].name,
     description:
-    "Une carotte riche en vitamine A.\nIdéale pour les smoothies.\nRiche en potassium.\nBonne pour la vue.",
+        "Une carotte riche en vitamine A.\nIdéale pour les smoothies.\nRiche en potassium.\nBonne pour la vue.",
   ),
   Product(
     id: uuid.v4(),
