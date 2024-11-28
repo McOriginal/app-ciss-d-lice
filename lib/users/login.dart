@@ -63,6 +63,16 @@ class _LoginPageState extends State<LoginPage> {
       );
       return;
     }
+
+    final connectedUSer = users.firstWhere((user) => user.email == email);
+
+    currentUser['id'] = connectedUSer.id;
+    currentUser['name'] = connectedUSer.name;
+    currentUser['email'] = connectedUSer.email;
+    currentUser['phone'] = connectedUSer.phone;
+    currentUser['passWord'] = connectedUSer.passWord;
+    currentUser['cart'] = connectedUSer.cart;
+
     showDialog(
         context: context,
         builder: (context) {
@@ -170,6 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       child: TextFormField(
                         controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           prefixIcon: Container(
                             margin: const EdgeInsets.only(left: 5),
@@ -207,6 +218,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(5)),
                       child: TextFormField(
                         controller: _passwordController,
+                        obscureText: true,
                         decoration: InputDecoration(
                           prefixIcon: Container(
                             margin: const EdgeInsets.only(left: 5),

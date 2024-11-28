@@ -1,5 +1,5 @@
 import 'package:cisse_delice/product/productDetail.dart';
-import 'package:cisse_delice/ui/productModal.dart';
+import 'package:cisse_delice/product/productModal.dart';
 import 'package:cisse_delice/ui/ui_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

@@ -1,5 +1,7 @@
-import 'package:cisse_delice/ui/productModal.dart';
+import 'package:cisse_delice/cart/cart_madal.dart';
+import 'package:cisse_delice/product/productModal.dart';
 import 'package:cisse_delice/ui/ui_modal.dart';
+import 'package:cisse_delice/users/user_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,6 +14,70 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
+  void addToCart() {
+    bool productExists =
+        currentUser['cart'].any((cartItem) => cartItem.id == widget.product.id);
+    if (productExists) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Cet produit existe dèjà dans le panier",
+            style: TextStyle(
+              color: AppColors.whiteColor,
+            ),
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    } else {
+      // Récupération de current User
+      String userId = currentUser['id'];
+      String userName = currentUser['name'];
+      String email = currentUser['email'];
+      int phone = currentUser['phone'];
+      String pass = currentUser['passWord'];
+      List<Cart> userCart = currentUser['cart'];
+
+      userCart.add(
+        Cart(
+          id: uuid.v4(),
+          userId: userId,
+          productName: widget.product.name,
+          productPrice: widget.product.price,
+          productImage: widget.product.imageUrl,
+          productCategory: widget.product.categoryId,
+          quantity: 1,
+        ),
+      );
+
+      // Ajout de l'utilisateur dans le panier
+      carts.add(
+        User(
+          id: userId,
+          name: userName,
+          email: email,
+          phone: phone,
+          passWord: pass,
+          cart: userCart,
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Produit ajouter Avec succès",
+            style: TextStyle(
+              color: AppColors.whiteColor,
+            ),
+          ),
+          backgroundColor: AppColors.accentColor,
+        ),
+      );
+      print(currentUser['cart']);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +130,7 @@ class _ProductDetailState extends State<ProductDetail> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Catégorie:',
+                    'Catégorie: ',
                     style: GoogleFonts.karla(
                       color: AppColors.secondaryColor,
                       fontSize: 26,
@@ -75,7 +141,7 @@ class _ProductDetailState extends State<ProductDetail> {
                     widget.product.categoryId.toUpperCase(),
                     style: GoogleFonts.karla(
                       color: AppColors.primaryColor,
-                      fontSize: 30,
+                      fontSize: 22,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -151,7 +217,7 @@ class _ProductDetailState extends State<ProductDetail> {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: addToCart,
               child: Center(
                 child: Container(
                   height: 50,
@@ -183,61 +249,3 @@ class _ProductDetailState extends State<ProductDetail> {
     );
   }
 }
-
-
-
-
-
-// Container(
-                      //   height: 40,
-                      //   width: 40,
-                      //   child: ElevatedButton(
-                      //     onPressed: () {},
-                      //     style: ElevatedButton.styleFrom(
-                      //       backgroundColor: AppColors.whiteColor,
-                      //       elevation: 1,
-                      //       padding: const EdgeInsets.all(10),
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(15),
-                      //       ),
-                      //     ),
-                      //     child: const Icon(
-                      //       Icons.remove,
-                      //       color: Colors.black,
-                      //     ),
-                      //   ),
-                      // ),
-                      // Container(
-                      //   height: 40,
-                      //   width: 40,
-                      //   decoration: const BoxDecoration(),
-                      //   child: Center(
-                      //     child: Text(
-                      //       "1",
-                      //       style: GoogleFonts.karla(
-                      //         color: AppColors.accentColor,
-                      //         fontSize: 25,
-                      //         fontWeight: FontWeight.w600,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Container(
-                      //   height: 40,
-                      //   width: 40,
-                      //   child: ElevatedButton(
-                      //     onPressed: () {},
-                      //     style: ElevatedButton.styleFrom(
-                      //       backgroundColor: Colors.orange,
-                      //       elevation: 1,
-                      //       padding: const EdgeInsets.all(10),
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(15),
-                      //       ),
-                      //     ),
-                      //     child: const Icon(
-                      //       Icons.add,
-                      //       color: Colors.black,
-                      //     ),
-                      //   ),
-                      // ),

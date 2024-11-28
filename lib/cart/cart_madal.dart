@@ -1,4 +1,4 @@
-import 'package:cisse_delice/ui/productModal.dart';
+import 'package:cisse_delice/product/productModal.dart';
 
 class Cart {
   final String id;
@@ -6,7 +6,8 @@ class Cart {
   final String productName;
   final int productPrice;
   final String productImage;
-  final Category productCategory;
+  final String productCategory;
+  int quantity;
 
   Cart({
     required this.id,
@@ -15,7 +16,8 @@ class Cart {
     required this.productPrice,
     required this.productImage,
     required this.productCategory,
+    required this.quantity,
   });
 }
 
-const List userCart = [];
+final List carts = [];

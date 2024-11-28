@@ -1,5 +1,4 @@
-import 'package:cisse_delice/home.dart';
-import 'package:cisse_delice/ui/productModal.dart';
+import 'package:cisse_delice/product/productModal.dart';
 import 'package:cisse_delice/ui/ui_modal.dart';
 import 'package:cisse_delice/users/login.dart';
 import 'package:cisse_delice/users/user_modal.dart';
@@ -173,6 +172,7 @@ class _SignupPageState extends State<SignupPage> {
                         hintText: "Téléphone",
                         icon: Icons.phone_outlined,
                         controller: _phoneController,
+                        keyboardType: TextInputType.phone,
                         validator: (value) {
                           return value!.isEmpty
                               ? "Veuillez entrez un numéro de téléphone"
@@ -184,6 +184,7 @@ class _SignupPageState extends State<SignupPage> {
                       hintText: "Adresse email",
                       icon: Icons.email_outlined,
                       controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         // Vérification de l'email avec une expression régulière
                         final regex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
@@ -311,6 +312,7 @@ class _SignupPageState extends State<SignupPage> {
     bool isPassword = false,
     required TextEditingController controller,
     required String? Function(String?)? validator,
+    TextInputType? keyboardType,
   }) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -322,6 +324,7 @@ class _SignupPageState extends State<SignupPage> {
       child: TextFormField(
         obscureText: isPassword,
         controller: controller,
+        keyboardType: keyboardType,
         decoration: InputDecoration(
           prefixIcon: Icon(icon, color: Colors.black54),
           border: InputBorder.none,

@@ -1,4 +1,4 @@
-import 'package:cisse_delice/cart/cart_list.dart';
+import 'package:cisse_delice/cart/cart_madal.dart';
 
 class User {
   final String id;
@@ -6,7 +6,7 @@ class User {
   final String email;
   final int phone;
   final String passWord;
-  final List<CartList> cart;
+  final List<Cart> cart;
 
   User({
     required this.id,
@@ -19,3 +19,5 @@ class User {
 }
 
 final List users = [];
+
+final currentUser = {};

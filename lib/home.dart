@@ -1,7 +1,7 @@
 import 'package:cisse_delice/cart/cart_list.dart';
 import 'package:cisse_delice/product/productDetail.dart';
 import 'package:cisse_delice/product/product_home.dart';
-import 'package:cisse_delice/ui/productModal.dart';
+import 'package:cisse_delice/product/productModal.dart';
 import 'package:cisse_delice/ui/ui_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 4);
+    _tabController = TabController(vsync: this, length: 5);
   }
 
   @override
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 child: const Icon(
-                                  Icons.dataset_sharp,
+                                  Icons.filter_list_alt,
                                   size: 35,
                                   color: AppColors.whiteColor,
                                 )),
@@ -516,6 +516,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 },
                 child: const Icon(
                   Icons.home_outlined,
+                  size: 30,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProductHome(),
+                    ),
+                  );
+                },
+                child: const Icon(
+                  Icons.format_list_bulleted_rounded,
                   size: 30,
                 ),
               ),
