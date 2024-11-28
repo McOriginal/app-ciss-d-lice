@@ -1,3 +1,4 @@
+import 'package:cisse_delice/bottom_nav_bar.dart';
 import 'package:cisse_delice/product/productDetail.dart';
 import 'package:cisse_delice/product/productModal.dart';
 import 'package:cisse_delice/ui/ui_modal.dart';
@@ -247,6 +248,7 @@ class _ProductHomeState extends State<ProductHome> {
           ),
         ],
       ),
+      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }

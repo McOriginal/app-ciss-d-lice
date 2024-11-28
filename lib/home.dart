@@ -1,3 +1,4 @@
+import 'package:cisse_delice/bottom_nav_bar.dart';
 import 'package:cisse_delice/cart/cart_list.dart';
 import 'package:cisse_delice/product/productDetail.dart';
 import 'package:cisse_delice/product/product_home.dart';
@@ -13,14 +14,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class _HomePageState extends State<HomePage> {
   late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(vsync: this, length: 5);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -489,76 +484,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 100,
-        padding: const EdgeInsets.all(10),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          color: Colors.white,
-          elevation: 3,
-          child: TabBar(
-            controller: _tabController,
-            labelColor: Colors.orangeAccent,
-            unselectedLabelColor: Colors.black,
-            indicator: const UnderlineTabIndicator(borderSide: BorderSide.none),
-            onTap: (value) {},
-            tabs: [
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                    ),
-                  );
-                },
-                child: const Icon(
-                  Icons.home_outlined,
-                  size: 30,
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ProductHome(),
-                    ),
-                  );
-                },
-                child: const Icon(
-                  Icons.format_list_bulleted_rounded,
-                  size: 30,
-                ),
-              ),
-              const Icon(
-                Icons.favorite_outline,
-                size: 30,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CartList(),
-                    ),
-                  );
-                },
-                child: const Icon(
-                  Icons.shopping_basket_outlined,
-                  size: 30,
-                ),
-              ),
-              const Icon(
-                Icons.person_outline,
-                size: 30,
-              ),
-            ],
-          ),
-        ),
-      ),
+      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }
