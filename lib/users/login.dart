@@ -72,6 +72,7 @@ class _LoginPageState extends State<LoginPage> {
     currentUser['phone'] = connectedUSer.phone;
     currentUser['passWord'] = connectedUSer.passWord;
     currentUser['cart'] = connectedUSer.cart;
+    currentUser['favorite'] = connectedUSer.favorite;
 
     showDialog(
         context: context,

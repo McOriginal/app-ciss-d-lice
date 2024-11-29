@@ -7,6 +7,7 @@ class User {
   final int phone;
   final String passWord;
   final List<Cart> cart;
+  final List favorite;
 
   User({
     required this.id,
@@ -15,9 +16,12 @@ class User {
     required this.phone,
     required this.passWord,
     required this.cart,
+    required this.favorite,
   });
 }
 
 final List users = [];
 
 final currentUser = {};
+
+final List usersFavorites = [];

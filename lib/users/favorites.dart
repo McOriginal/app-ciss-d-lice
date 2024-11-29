@@ -1,34 +1,20 @@
-import 'package:cisse_delice/bottom_nav_bar.dart';
 import 'package:cisse_delice/cart/cart_list.dart';
 import 'package:cisse_delice/cart/cart_madal.dart';
 import 'package:cisse_delice/product/productDetail.dart';
 import 'package:cisse_delice/product/productModal.dart';
 import 'package:cisse_delice/ui/ui_modal.dart';
-import 'package:cisse_delice/users/favorite_modal.dart';
 import 'package:cisse_delice/users/user_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProductHome extends StatefulWidget {
-  const ProductHome({super.key});
+class Favorites extends StatefulWidget {
+  const Favorites({super.key});
 
   @override
-  State<ProductHome> createState() => _ProductHomeState();
+  State<Favorites> createState() => _FavoritesState();
 }
 
-class _ProductHomeState extends State<ProductHome> {
-//  ############"# Search Bar" ##############""
-  List<Product> filteredProducts = products; // Liste des produits filtrés
-
-  void searchProduct(String query) {
-    setState(() {
-      filteredProducts = products.where((product) {
-        return product.name.toLowerCase().contains(query.toLowerCase());
-      }).toList();
-    });
-  }
-  // ############"# Search Bar" ##############""
-
+class _FavoritesState extends State<Favorites> {
   //  ############# Total des éléments de panier
 
   int totalItems = currentUser['cart'].fold(
@@ -68,7 +54,7 @@ class _ProductHomeState extends State<ProductHome> {
 
       userCart.add(
         Cart(
-          id: product.id,
+          id: uuid.v4(),
           userId: userId,
           productName: product.name,
           productPrice: product.price,
@@ -109,11 +95,11 @@ class _ProductHomeState extends State<ProductHome> {
     }
   }
 
-// ################### Fontion d'ajout de panier Terminé
+// ################### Fontion d'ajout de panier
 
 // ################### addToFavorite fonction
 
-  void addToFavorite(product) {
+  void removeToFavorite(product) {
     bool productExists =
         currentUser['favorite'].any((cartItem) => cartItem.id == product.id);
     if (productExists) {
@@ -133,48 +119,6 @@ class _ProductHomeState extends State<ProductHome> {
         ),
       );
       return; // Sortie de la fonction après la suppression
-    } else {
-      // Récupération de current User
-      String userId = currentUser['id'];
-      String userName = currentUser['name'];
-      String email = currentUser['email'];
-      int phone = currentUser['phone'];
-      String pass = currentUser['passWord'];
-      List<Cart> userCart = currentUser['cart'];
-      List userFavorite = currentUser['favorite'];
-
-      userFavorite.add(Favorite(
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        imageUrl: product.imageUrl,
-        isFavorite: product.isFavorite,
-        categoryId: product.categoryId,
-        description: product.description,
-      ));
-      usersFavorites.add(
-        User(
-          id: userId,
-          name: userName,
-          email: email,
-          phone: phone,
-          passWord: pass,
-          cart: userCart,
-          favorite: userFavorite,
-        ),
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            "Produit ajouter dans vos favorite Avec succès",
-            style: TextStyle(
-              color: AppColors.whiteColor,
-            ),
-          ),
-          backgroundColor: AppColors.accentColor,
-        ),
-      );
     }
   }
 
@@ -315,43 +259,12 @@ class _ProductHomeState extends State<ProductHome> {
                   ],
                 ),
                 Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Explorer les mueilleur",
-                        style: GoogleFonts.karla(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
-                    border: Border.all(color: AppColors.accentColor, width: 1),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: TextField(
-                    onChanged:
-                        searchProduct, // Appel de la fonction de recherche
-                    decoration: const InputDecoration(
-                      suffixIcon: Icon(
-                        Icons.search_outlined,
-                        color: AppColors.accentColor,
-                      ),
-                      border: InputBorder.none,
-                      hintText: "Rechercher",
-                      hintStyle: TextStyle(
-                        color: AppColors.accentColor,
-                      ),
+                  child: Text(
+                    "Mes produits préférés !",
+                    style: GoogleFonts.karla(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryColor,
                     ),
                   ),
                 ),
@@ -359,7 +272,7 @@ class _ProductHomeState extends State<ProductHome> {
             ),
           ),
           const SizedBox(height: 15),
-          filteredProducts.isNotEmpty
+          currentUser['favorite'].isNotEmpty
               ? Expanded(
                   child: GridView.builder(
                     gridDelegate:
@@ -370,10 +283,11 @@ class _ProductHomeState extends State<ProductHome> {
                       mainAxisExtent: 320,
                     ),
                     shrinkWrap: true,
-                    itemCount: filteredProducts
-                        .length, // Utilisation de la liste filtrée
+                    itemCount: currentUser['favorite'].length,
+                    // Utilisation de la liste filtrée
                     itemBuilder: (context, index) {
-                      final product = filteredProducts[index]; // Produit filtré
+                      final product =
+                          currentUser['favorite'][index]; // Produit filtré
                       return InkWell(
                         onTap: () {
                           Navigator.push(
@@ -435,14 +349,12 @@ class _ProductHomeState extends State<ProductHome> {
                                   alignment: Alignment.topRight,
                                   child: InkWell(
                                     onTap: () {
-                                      addToFavorite(product);
-                                      setState(() {});
+                                      setState(() {
+                                        removeToFavorite(product);
+                                      });
                                     },
-                                    child: Icon(
-                                      currentUser['favorite'].any((cartItem) =>
-                                              cartItem.id == product.id)
-                                          ? Icons.favorite
-                                          : Icons.favorite_outline,
+                                    child: const Icon(
+                                      Icons.delete_forever,
                                       size: 35,
                                       color: AppColors.primaryColor,
                                     ),
@@ -484,19 +396,21 @@ class _ProductHomeState extends State<ProductHome> {
                     },
                   ),
                 )
-              : Center(
-                  child: Text(
-                    "Aucun produit trouvé !",
-                    style: GoogleFonts.karla(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primaryColor,
-                    ),
-                  ),
-                ),
+              : const SizedBox(height: 200),
+          Center(
+            child: Text(
+              "Aucun produit trouvé dans votre favorite !",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.karla(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primaryColor,
+              ),
+            ),
+          ),
         ],
       ),
-      bottomNavigationBar: const BottomNavBar(),
+      // bottomNavigationBar: const BottomNavBar(),
     );
   }
 }

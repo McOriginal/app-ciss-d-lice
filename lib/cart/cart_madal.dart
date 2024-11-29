@@ -1,5 +1,3 @@
-import 'package:cisse_delice/product/productModal.dart';
-
 class Cart {
   final String id;
   final String userId;

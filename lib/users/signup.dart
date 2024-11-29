@@ -106,6 +106,7 @@ class _SignupPageState extends State<SignupPage> {
           phone: int.parse(_phoneController.text),
           passWord: _passwordController.text,
           cart: [],
+          favorite: [],
         ),
       );
       Navigator.push(

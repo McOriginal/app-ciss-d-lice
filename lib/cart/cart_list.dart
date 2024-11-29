@@ -301,30 +301,31 @@ class _CartListState extends State<CartList> {
                     InkWell(
                       onTap: () {},
                       child: Container(
-                        width: 130,
+                        width: 170,
                         height: 50,
-                        margin: const EdgeInsets.only(top: 17, left: 30),
+                        margin: const EdgeInsets.only(top: 17, left: 5),
                         padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          color: AppColors.whiteColor,
+                          color: AppColors.primaryColor,
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
                                 "Valider",
                                 style: GoogleFonts.karla(
                                   fontSize: 25,
                                   fontWeight: FontWeight.w700,
-                                  color: AppColors.primaryColor,
+                                  color: AppColors.whiteColor,
                                 ),
                               ),
                               const Icon(
                                 Icons.near_me,
                                 size: 30,
-                                color: AppColors.accentColor,
+                                color: AppColors.whiteColor,
                               ),
                             ],
                           ),

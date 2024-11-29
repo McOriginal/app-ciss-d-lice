@@ -1,6 +1,7 @@
 import 'package:cisse_delice/cart/cart_list.dart';
 import 'package:cisse_delice/home.dart';
 import 'package:cisse_delice/product/product_home.dart';
+import 'package:cisse_delice/users/favorites.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -65,9 +66,19 @@ class _BottomNavBarState extends State<BottomNavBar>
                 size: 30,
               ),
             ),
-            const Icon(
-              Icons.favorite_outline,
-              size: 30,
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Favorites(),
+                  ),
+                );
+              },
+              child: const Icon(
+                Icons.favorite_outline,
+                size: 30,
+              ),
             ),
             InkWell(
               onTap: () {
