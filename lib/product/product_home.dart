@@ -496,7 +496,6 @@ class _ProductHomeState extends State<ProductHome> {
                 ),
         ],
       ),
-      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:cisse_delice/bottom_nav_bar.dart';
-import 'package:cisse_delice/cart/cart_list.dart';
 import 'package:cisse_delice/product/productDetail.dart';
 import 'package:cisse_delice/product/product_home.dart';
 import 'package:cisse_delice/product/productModal.dart';
 import 'package:cisse_delice/ui/ui_modal.dart';
+import 'package:cisse_delice/users/user_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,8 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late TabController _tabController;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +22,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ######################## HEADER IMAGES #######################
             Stack(
               children: [
                 const Image(
@@ -34,17 +33,20 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // ####################### HEADER TEXT #################
                       Row(
                         children: [
                           const Icon(
-                            Icons.place_outlined,
+                            Icons.warehouse_outlined,
                             size: 40,
                             color: AppColors.whiteColor,
                           ),
+                          const SizedBox(width: 5),
                           Text(
-                            "Bamako, Golf",
+                            "Bienvenue",
+                            textAlign: TextAlign.center,
                             style: GoogleFonts.karla(
-                              fontSize: 18,
+                              fontSize: 25,
                               fontWeight: FontWeight.w600,
                               color: AppColors.whiteColor,
                             ),
@@ -52,71 +54,80 @@ class _HomePageState extends State<HomePage> {
                           const Spacer(),
                           Padding(
                             padding: const EdgeInsets.all(10),
-                            child: ClipOval(
-                              child: SizedBox(
-                                height: 50,
-                                child: Image.asset("assets/images/user.jpg"),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        "Bonjour, Mohamed ! \n que voulez-vous aujourd'hui",
-                        style: GoogleFonts.karla(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.whiteColor,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
                             child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
+                              height: 50,
+                              width: 50,
                               decoration: BoxDecoration(
                                 color: AppColors.whiteColor,
                                 border: Border.all(
-                                    color: AppColors.accentColor, width: 1),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: const TextField(
-                                decoration: InputDecoration(
-                                  suffixIcon: Icon(
-                                    Icons.search_outlined,
-                                    color: AppColors.accentColor,
+                                  width: 1,
+                                  color: AppColors.secondaryColor,
+                                ),
+                                borderRadius: BorderRadius.circular(30),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    blurRadius: 10,
+                                    offset: Offset(0, 2),
+                                    color: AppColors.whiteColor,
                                   ),
-                                  border: InputBorder.none,
-                                  hintText: "Rechercher",
-                                  hintStyle: TextStyle(
-                                    color: AppColors.accentColor,
+                                ],
+                              ),
+                              child: Center(
+                                child: Text(
+                                  currentUser['name'][0],
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.karla(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.secondaryColor,
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(width: 10),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Container(
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10),
-                                  ),
-                                ),
-                                child: const Icon(
-                                  Icons.filter_list_alt,
-                                  size: 35,
-                                  color: AppColors.whiteColor,
-                                )),
-                          ),
                         ],
                       ),
                       const SizedBox(height: 10),
+
+                      // #################### USER HEADER ###################
+                      Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              currentUser['name'].split(' ')[0],
+                              style: GoogleFonts.karla(
+                                fontSize: 26,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.secondaryColor,
+                              ),
+                            ),
+                            Text(
+                              "que voulez-vous aujourd'hui",
+                              style: GoogleFonts.karla(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.whiteColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+
+                      // #################### LOGO ###################
+                      const Center(
+                        child: SizedBox(
+                          child: Image(
+                            image: AssetImage('assets/images/logo.png'),
+                            width: 170,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      // ###################################### CATEGORIES LIST VIEW ##############
                       SizedBox(
                         height: 120,
                         width: double.infinity,
@@ -159,6 +170,8 @@ class _HomePageState extends State<HomePage> {
                             }),
                       ),
                       const SizedBox(height: 10),
+
+                      // #################################### POPULAR LIST VIEW ###################
                       Container(
                         padding: const EdgeInsets.all(10),
                         child: Column(
@@ -274,6 +287,8 @@ class _HomePageState extends State<HomePage> {
                                   }),
                             ),
                             const SizedBox(height: 10),
+
+                            // #######################3 EN PROMOTION LIST VIEW ######################
                             Text(
                               'En promotion',
                               style: GoogleFonts.karla(
@@ -437,6 +452,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const SizedBox(height: 10),
+
+                      // ############################ GO TO ALL PRODUCT VIEW BOUTON #######################
                       Center(
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width / 2,
