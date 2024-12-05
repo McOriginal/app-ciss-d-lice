@@ -1,6 +1,5 @@
 import 'package:cisse_delice/cart/cart_list.dart';
 import 'package:cisse_delice/cart/cart_madal.dart';
-import 'package:cisse_delice/product/productDetail.dart';
 import 'package:cisse_delice/product/productModal.dart';
 import 'package:cisse_delice/ui/ui_modal.dart';
 import 'package:cisse_delice/users/user_modal.dart';
