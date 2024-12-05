@@ -143,7 +143,7 @@ class UserProfileState extends State<UserProfile> {
                     Text(
                       "Votre Nom:",
                       style: GoogleFonts.karla(
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: AppColors.primaryColor,
                       ),
@@ -151,7 +151,7 @@ class UserProfileState extends State<UserProfile> {
                     Text(
                       currentUser['name'].split(' ')[0],
                       style: GoogleFonts.karla(
-                        fontSize: 18,
+                        fontSize: 14,
                         color: AppColors.accentColor,
                       ),
                     ),
@@ -163,7 +163,7 @@ class UserProfileState extends State<UserProfile> {
                     Text(
                       "Votre Prénom:",
                       style: GoogleFonts.karla(
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: AppColors.primaryColor,
                       ),
@@ -171,7 +171,7 @@ class UserProfileState extends State<UserProfile> {
                     Text(
                       currentUser['name'].split(' ')[1],
                       style: GoogleFonts.karla(
-                        fontSize: 20,
+                        fontSize: 14,
                         color: AppColors.accentColor,
                       ),
                     ),
@@ -183,7 +183,7 @@ class UserProfileState extends State<UserProfile> {
                     Text(
                       "Numéro de Téléphone:",
                       style: GoogleFonts.karla(
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: AppColors.primaryColor,
                       ),
@@ -191,7 +191,7 @@ class UserProfileState extends State<UserProfile> {
                     Text(
                       currentUser['phone'].toString(),
                       style: GoogleFonts.karla(
-                        fontSize: 20,
+                        fontSize: 14,
                         color: AppColors.accentColor,
                       ),
                     ),
@@ -203,7 +203,7 @@ class UserProfileState extends State<UserProfile> {
                     Text(
                       "Adresse Email:",
                       style: GoogleFonts.karla(
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: AppColors.primaryColor,
                       ),
@@ -211,7 +211,7 @@ class UserProfileState extends State<UserProfile> {
                     Text(
                       currentUser['email'],
                       style: GoogleFonts.karla(
-                        fontSize: 20,
+                        fontSize: 14,
                         color: AppColors.accentColor,
                       ),
                     ),

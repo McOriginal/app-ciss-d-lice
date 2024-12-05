@@ -1,4 +1,3 @@
-import 'package:cisse_delice/bottom_nav_bar.dart';
 import 'package:cisse_delice/cart/cart_list.dart';
 import 'package:cisse_delice/cart/cart_madal.dart';
 import 'package:cisse_delice/product/productDetail.dart';

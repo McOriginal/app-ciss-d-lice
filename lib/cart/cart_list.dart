@@ -89,122 +89,171 @@ class _CartListState extends State<CartList> {
                         final cartItem = currentUser['cart'][index];
                         int quantity = cartItem.quantity;
 
-                        return Card(
-                          elevation: 5,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 110,
-                                height: 120,
-                                margin: const EdgeInsets.only(
-                                  right: 20,
-                                  top: 5,
-                                  bottom: 5,
-                                  left: 5,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: AssetImage(cartItem.productImage),
-                                    fit: BoxFit.cover,
+                        return Dismissible(
+                          key: Key(cartItem.productName),
+                          direction: DismissDirection.endToStart,
+                          onDismissed: (direction) {
+                            setState(() {
+                              currentUser['cart'].removeAt(index);
+                              // Recalculer le nombre total d'éléments et le total
+                              totalItems = currentUser['cart']
+                                  .fold(0, (sum, item) => sum + item.quantity);
+                              totalPrice = currentUser['cart'].fold(
+                                  0.0,
+                                  (sum, item) =>
+                                      sum +
+                                      (item.productPrice * item.quantity));
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content:
+                                      Text("${cartItem.productName} supprimé")),
+                            );
+                          },
+                          background: Container(
+                            color: Colors.red,
+                            alignment: Alignment.centerRight,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child:
+                                const Icon(Icons.delete, color: Colors.white),
+                          ),
+                          child: Card(
+                            elevation: 5,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 110,
+                                  height: 120,
+                                  margin: const EdgeInsets.only(
+                                    right: 20,
+                                    top: 5,
+                                    bottom: 5,
+                                    left: 5,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                      image: AssetImage(cartItem.productImage),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(right: 20),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      cartItem.productName,
-                                      style: GoogleFonts.karla(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.primaryColor,
+                                Container(
+                                  margin: const EdgeInsets.only(right: 20),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        cartItem.productName,
+                                        style: GoogleFonts.karla(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.primaryColor,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 15),
-                                    Text(
-                                      "${cartItem.productPrice} F",
-                                      style: GoogleFonts.karla(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.accentColor,
+                                      const SizedBox(height: 15),
+                                      Text(
+                                        "${cartItem.productPrice} F",
+                                        style: GoogleFonts.karla(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.accentColor,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              const Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: 40,
-                                      width: 40,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            quantity++;
-                                            cartItem.quantity = quantity;
-                                            // Recalculer le nombre total d'éléments et le total
-                                            totalItems = currentUser['cart']
-                                                .fold(
-                                                    0,
-                                                    (sum, item) =>
-                                                        sum + item.quantity);
-                                            totalPrice = currentUser['cart']
-                                                .fold(
-                                                    0.0,
-                                                    (sum, item) =>
-                                                        sum +
-                                                        (item.productPrice *
-                                                            item.quantity));
-                                          });
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.orange,
-                                          elevation: 1,
-                                          padding: const EdgeInsets.all(2),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
+                                const Spacer(),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 40,
+                                        width: 40,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              if (quantity > 1) {
+                                                quantity--;
+                                                cartItem.quantity = quantity;
+                                                // Recalculer le nombre total d'éléments et le total
+                                                totalItems = currentUser['cart']
+                                                    .fold(
+                                                        0,
+                                                        (sum, item) =>
+                                                            sum +
+                                                            item.quantity);
+                                                totalPrice = currentUser['cart']
+                                                    .fold(
+                                                        0.0,
+                                                        (sum, item) =>
+                                                            sum +
+                                                            (item.productPrice *
+                                                                item.quantity));
+                                              } else {
+                                                // Supprimer l'élément si la quantité est 1
+                                                currentUser['cart']
+                                                    .removeAt(index);
+                                                totalItems = currentUser['cart']
+                                                    .fold(
+                                                        0,
+                                                        (sum, item) =>
+                                                            sum +
+                                                            item.quantity);
+                                                totalPrice = currentUser['cart']
+                                                    .fold(
+                                                        0.0,
+                                                        (sum, item) =>
+                                                            sum +
+                                                            (item.productPrice *
+                                                                item.quantity));
+                                              }
+                                            });
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                AppColors.whiteColor,
+                                            elevation: 1,
+                                            padding: const EdgeInsets.all(2),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                          ),
+                                          child: const Icon(
+                                            Icons.remove,
+                                            color: AppColors.primaryColor,
+                                            size: 26,
                                           ),
                                         ),
-                                        child: const Icon(
-                                          Icons.add,
-                                          color: AppColors.whiteColor,
-                                          size: 26,
-                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 40,
-                                      width: 40,
-                                      child: Center(
-                                        child: Text(
-                                          "$quantity",
-                                          style: GoogleFonts.karla(
-                                            color: AppColors.accentColor,
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.w600,
+                                      SizedBox(
+                                        height: 40,
+                                        width: 40,
+                                        child: Center(
+                                          child: Text(
+                                            "$quantity",
+                                            style: GoogleFonts.karla(
+                                              color: AppColors.accentColor,
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 40,
-                                      width: 40,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            if (quantity > 1) {
-                                              quantity--;
+                                      SizedBox(
+                                        height: 40,
+                                        width: 40,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              quantity++;
                                               cartItem.quantity = quantity;
                                               // Recalculer le nombre total d'éléments et le total
                                               totalItems = currentUser['cart']
@@ -220,36 +269,36 @@ class _CartListState extends State<CartList> {
                                                           sum +
                                                           (item.productPrice *
                                                               item.quantity));
-                                            }
-                                          });
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: AppColors.whiteColor,
-                                          elevation: 1,
-                                          padding: const EdgeInsets.all(2),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
+                                            });
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.orange,
+                                            elevation: 1,
+                                            padding: const EdgeInsets.all(2),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                          ),
+                                          child: const Icon(
+                                            Icons.add,
+                                            color: AppColors.whiteColor,
+                                            size: 26,
                                           ),
                                         ),
-                                        child: const Icon(
-                                          Icons.remove,
-                                          color: AppColors.primaryColor,
-                                          size: 26,
-                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         );
                       }),
                 )
               : Center(
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height / 1.9,
+                    height: MediaQuery.of(context).size.height / 2.5,
                     child: Center(
                       child: Text(
                         "Aucun produit trouvé dans votre favorite !",

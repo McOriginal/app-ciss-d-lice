@@ -1,9 +1,12 @@
 import 'package:cisse_delice/bottom_nav_bar.dart';
+import 'package:cisse_delice/cart/cart_madal.dart';
 import 'package:cisse_delice/product/productDetail.dart';
 import 'package:cisse_delice/product/product_home.dart';
 import 'package:cisse_delice/product/productModal.dart';
 import 'package:cisse_delice/ui/ui_modal.dart';
+import 'package:cisse_delice/users/favorite_modal.dart';
 import 'package:cisse_delice/users/user_modal.dart';
+import 'package:cisse_delice/users/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,6 +18,76 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // ################### addToFavorite fonction
+
+  void addToFavorite(product) {
+    bool productExists =
+        currentUser['favorite'].any((cartItem) => cartItem.id == product.id);
+    if (productExists) {
+      // Suppression du produit des favoris
+      currentUser['favorite']
+          .removeWhere((cartItem) => cartItem.id == product.id);
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Produit supprimé dans votre liste de favoris",
+            style: TextStyle(
+              color: AppColors.whiteColor,
+            ),
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return; // Sortie de la fonction après la suppression
+    } else {
+      // Récupération de current User
+      String userId = currentUser['id'];
+      String userName = currentUser['name'];
+      String email = currentUser['email'];
+      int phone = currentUser['phone'];
+      String pass = currentUser['passWord'];
+      List<Cart> userCart = currentUser['cart'];
+      List userFavorite = currentUser['favorite'];
+
+      userFavorite.add(Favorite(
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        isFavorite: product.isFavorite,
+        categoryId: product.categoryId,
+        description: product.description,
+      ));
+      usersFavorites.add(
+        User(
+          id: userId,
+          name: userName,
+          email: email,
+          phone: phone,
+          passWord: pass,
+          cart: userCart,
+          favorite: userFavorite,
+        ),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Produit ajouter dans vos favorite Avec succès",
+            style: TextStyle(
+              color: AppColors.whiteColor,
+            ),
+          ),
+          backgroundColor: AppColors.accentColor,
+        ),
+      );
+      setState(() {
+        print(currentUser['favorite']);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,32 +127,42 @@ class _HomePageState extends State<HomePage> {
                           const Spacer(),
                           Padding(
                             padding: const EdgeInsets.all(10),
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                color: AppColors.whiteColor,
-                                border: Border.all(
-                                  width: 1,
-                                  color: AppColors.secondaryColor,
-                                ),
-                                borderRadius: BorderRadius.circular(30),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    blurRadius: 10,
-                                    offset: Offset(0, 2),
-                                    color: AppColors.whiteColor,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const UserProfile(),
                                   ),
-                                ],
-                              ),
-                              child: Center(
-                                child: Text(
-                                  currentUser['name'][0],
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.karla(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w600,
+                                );
+                              },
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  color: AppColors.whiteColor,
+                                  border: Border.all(
+                                    width: 1,
                                     color: AppColors.secondaryColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 10,
+                                      offset: Offset(0, 2),
+                                      color: AppColors.whiteColor,
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    currentUser['name'][0],
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.karla(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.secondaryColor,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -128,6 +211,15 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(height: 10),
                       // ###################################### CATEGORIES LIST VIEW ##############
+                      Text(
+                        "Catégorie des produits",
+                        style: GoogleFonts.karla(
+                          fontSize: 26,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+
                       SizedBox(
                         height: 120,
                         width: double.infinity,
@@ -139,6 +231,7 @@ class _HomePageState extends State<HomePage> {
                               return Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Card(
+                                  elevation: 3,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
@@ -265,12 +358,14 @@ class _HomePageState extends State<HomePage> {
                                                 child: InkWell(
                                                   onTap: () {
                                                     setState(() {
-                                                      product.isFavorite =
-                                                          !product.isFavorite;
+                                                      addToFavorite(product);
                                                     });
                                                   },
                                                   child: Icon(
-                                                    product.isFavorite
+                                                    currentUser['favorite'].any(
+                                                            (cartItem) =>
+                                                                cartItem.id ==
+                                                                product.id)
                                                         ? Icons.favorite
                                                         : Icons
                                                             .favorite_outline,
@@ -425,12 +520,14 @@ class _HomePageState extends State<HomePage> {
                                                   child: InkWell(
                                                     onTap: () {
                                                       setState(() {
-                                                        product.isFavorite =
-                                                            !product.isFavorite;
+                                                        addToFavorite(product);
                                                       });
                                                     },
                                                     child: Icon(
-                                                      product.isFavorite
+                                                      currentUser['favorite']
+                                                              .any((cartItem) =>
+                                                                  cartItem.id ==
+                                                                  product.id)
                                                           ? Icons.favorite
                                                           : Icons
                                                               .favorite_outline,

@@ -76,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
 
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) {
           return const AlertDialog(
             title: Text(
@@ -140,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
-              height: MediaQuery.of(context).size.height / 2.5,
+              height: MediaQuery.of(context).size.height / 2,
               child: Center(
                 child: Form(
                   key: _formKey,
@@ -321,7 +322,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 9),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 3.9,
+              height: MediaQuery.of(context).size.height / 3.6,
               child: const Stack(
                 children: [
                   Positioned(

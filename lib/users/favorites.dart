@@ -288,126 +288,114 @@ class _FavoritesState extends State<Favorites> {
                     itemBuilder: (context, index) {
                       final product =
                           currentUser['favorite'][index]; // Produit filtré
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ProductDetail(product: product),
+                      return Card(
+                        elevation: 2,
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(product.imageUrl),
+                                ),
+                              ),
                             ),
-                          );
-                        },
-                        child: Card(
-                          elevation: 2,
-                          child: Stack(
-                            children: [
-                              Container(
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage(product.imageUrl),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      product.name,
-                                      style: GoogleFonts.karla(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.primaryColor,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Catégorie/ ${product.categoryId}',
-                                      style: GoogleFonts.karla(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey[500],
-                                      ),
-                                    ),
-                                    Text(
-                                      '${product.price} F',
-                                      style: GoogleFonts.karla(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.accentColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Align(
-                                  alignment: Alignment.topRight,
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        removeToFavorite(product);
-                                      });
-                                    },
-                                    child: const Icon(
-                                      Icons.delete_forever,
-                                      size: 35,
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    product.name,
+                                    style: GoogleFonts.karla(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
                                       color: AppColors.primaryColor,
                                     ),
                                   ),
-                                ),
+                                  Text(
+                                    'Catégorie/ ${product.categoryId}',
+                                    style: GoogleFonts.karla(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey[500],
+                                    ),
+                                  ),
+                                  Text(
+                                    '${product.price} F',
+                                    style: GoogleFonts.karla(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.accentColor,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Align(
-                                alignment: Alignment.bottomRight,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Align(
+                                alignment: Alignment.topRight,
                                 child: InkWell(
                                   onTap: () {
-                                    addToCart(product);
                                     setState(() {
-                                      totalItems = currentUser['cart'].fold(0,
-                                          (sum, item) => sum + item.quantity);
+                                      removeToFavorite(product);
                                     });
                                   },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.secondaryColor,
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
-                                      child: const Icon(
-                                        Icons.add_outlined,
-                                        size: 30,
-                                        color: AppColors.whiteColor,
-                                      ),
+                                  child: const Icon(
+                                    Icons.delete_forever,
+                                    size: 35,
+                                    color: AppColors.primaryColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: InkWell(
+                                onTap: () {
+                                  addToCart(product);
+                                  setState(() {
+                                    totalItems = currentUser['cart'].fold(
+                                        0, (sum, item) => sum + item.quantity);
+                                  });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.secondaryColor,
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    child: const Icon(
+                                      Icons.add_outlined,
+                                      size: 30,
+                                      color: AppColors.whiteColor,
                                     ),
                                   ),
                                 ),
-                              )
-                            ],
-                          ),
+                              ),
+                            )
+                          ],
                         ),
                       );
                     },
                   ),
                 )
-              : const SizedBox(height: 200),
-          Center(
-            child: Text(
-              "Aucun produit trouvé dans votre favorite !",
-              textAlign: TextAlign.center,
-              style: GoogleFonts.karla(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: AppColors.primaryColor,
-              ),
-            ),
-          ),
+              : Center(
+                  child: Text(
+                    "Aucun produit trouvé dans votre favorite !",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.karla(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
+                ),
         ],
       ),
       // bottomNavigationBar: const BottomNavBar(),

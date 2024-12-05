@@ -76,6 +76,7 @@ class _SignupPageState extends State<SignupPage> {
     }
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) {
           return const AlertDialog(
             title: Text(
@@ -140,7 +141,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
-                    child: const Image(
+                    child: Image(
                       image: AssetImage('assets/images/logo.png'),
                       width: 170,
                       fit: BoxFit.cover,
